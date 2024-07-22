@@ -8,7 +8,6 @@ public class Ball : MonoBehaviour
     public Vector2 direction;
     public Vector3 oldPos;
     public Vector3 nextPos;
-
     private LayerMask layerMask;
 
 
@@ -16,7 +15,7 @@ public class Ball : MonoBehaviour
     {
         layerMask = LayerMask.GetMask("Wall","Brick");
         float directionX = Random.value > 0.5f ? 1 : -1;
-        float directionY = Random.Range(-1f, 1f);
+        float directionY = -1;
 
         direction = new Vector2(directionX, directionY).normalized;
         oldPos = transform.position;
@@ -35,8 +34,6 @@ public class Ball : MonoBehaviour
             direction = Vector2.Reflect(direction, hit.normal);
             if (hit.collider.isTrigger)
             {
-                Debug.Log("Trigger");
-                // take parent, take brick component and decrease health
                 Transform parent = (hit.collider.transform.parent).parent;
                 Brick brick = parent.GetComponent<Brick>();
                 brick.health--;

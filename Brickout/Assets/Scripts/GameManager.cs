@@ -12,23 +12,33 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     public GameObject brickPrefab;
-    public int rows = 5;  // Satır sayısı
-    public int columns = 10;  // Sütun sayısı
-    public float xOffset = 1.1f;  // Brick'ler arasındaki yatay mesafe
-    public float yOffset = 0.6f;  // Brick'ler arasındaki dikey mesafe
-    public Vector2 startPosition = new Vector2(-5, 4);
+    public List<List<object>> level1 = new List<List<object>>(){
+            new List<object> { 5, 11, 1.2f, 0.7f, new Vector2(-6f, 3.5f) },
+            new List<object> { 5, 5, 1.5f, 1f, new Vector2(-6f, 3.5f) },
+        };
     private void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
-        SceneManager.LoadScene("Level" + level + "Scene");
 
-        // if level 1 scene is loaded
-        // create bricks
-        // create 20 bricks
-        // 5 rows and 4 columns
-        // 1 unit space between bricks
-        // 1 unit space between bricks and walls
-        // 1 unit space between bricks and top wall
+        LoadNextLevel();
+
+        // need to add a way to load the next level
+        // find the prick count and if it is 0 then load the next level
+    }
+
+    public void LoadNextLevel()
+    {
+        SceneManager.LoadScene("Level" + level + "Scene");
+        BrickCreator(level1[level-1]);
+    }
+
+    public void BrickCreator(List<object> level)
+    {
+        int rows = (int)level[0];
+        int columns = (int)level[1];
+        float xOffset = (float)level[2];
+        float yOffset = (float)level[3];
+        Vector2 startPosition = (Vector2)level[4];
 
         for (int row = 0; row < rows; row++)
         {
@@ -37,9 +47,8 @@ public class GameManager : MonoBehaviour
                 Vector2 position = new Vector2(startPosition.x + col * xOffset, startPosition.y - row * yOffset);
                 GameObject brick = Instantiate(brickPrefab, position, Quaternion.identity);
                 brick.transform.parent = this.transform;
-                // Burada brick'e can değeri veya diğer özellikleri atayabilirsiniz
             }
         }
-
     }
+
 }
