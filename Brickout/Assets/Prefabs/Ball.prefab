@@ -211,3 +211,4 @@ MonoBehaviour:
   direction: {x: 0, y: 0}
   oldPos: {x: 0, y: 0, z: 0}
   nextPos: {x: 0, y: 0, z: 0}
+  gameManagerObject: {fileID: 3369073887678980276, guid: 874ad373c0c1df14fa762bb856a267df, type: 3}
