@@ -2,19 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 
 public class GameManager : MonoBehaviour
 {
     public int level = 1;
-    public int score;
+    public TMP_Text levelText;
+    public TMP_Text livesText;
     public int lives;
     [SerializeField]
     public GameObject brickPrefab;
     public GameObject particlePrefab;
     public List<List<object>> level1 = new List<List<object>>(){
             new List<object> { 3, 11, 1.2f, 0.7f, new Vector2(-6f, 3.5f), 1 },
-            new List<object> { 5, 11, 1.2f, 0.7f, new Vector2(-6f, 3.5f), 99 },
+            new List<object> { 4, 11, 1.2f, 0.7f, new Vector2(-6f, 3.5f), 2 },
         };
     public int brickCount;
     private void Awake()
@@ -32,10 +34,16 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void updateLives()
+    {
+        livesText.text = "Lives: " + lives;
+    }
+
     public void LoadNextLevel()
     {
         SceneManager.LoadScene("Level" + level + "Scene");
         BrickCreator(level1[level-1]);
+        levelText.text = "Level: " + level;
     }
 
     public void BrickCreator(List<object> level)
@@ -56,7 +64,7 @@ public class GameManager : MonoBehaviour
                 Vector2 position = new Vector2(startPosition.x + col * xOffset, startPosition.y - row * yOffset);
                 GameObject brick = Instantiate(brickPrefab, position, Quaternion.identity);
                 brick.transform.parent = this.transform;
-                brick.GetComponent<Brick>().health = health;
+                brick.GetComponent<Brick>().health = health + row;
             }
         }
     }
