@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8808574778461997258}
   - component: {fileID: 8287405578395531875}
-  - component: {fileID: 6090275548929031603}
+  - component: {fileID: 196924381779496437}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -50,13 +50,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: 1
+  lives: 3
   levelText: {fileID: 1399005587692628341, guid: 3ce8a7cf15f0444428c176d9353d402a, type: 3}
   livesText: {fileID: 7078027376090324312, guid: 0636be198ff36014bb245853a7310da4, type: 3}
-  lives: 3
+  themeSong: {fileID: 0}
   brickPrefab: {fileID: 273162328750952640, guid: 25e53d1587b946b44b5cae06626a7411, type: 3}
   particlePrefab: {fileID: 3793327030071853399, guid: 0ac3b07877618694eafd2a22d6c89fdd, type: 3}
   brickCount: 0
---- !u!82 &6090275548929031603
+--- !u!82 &196924381779496437
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -68,9 +69,9 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 5bae35fee0a1f6046bb3e3c3f62d2028, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.4
+  m_Volume: 0.03
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0

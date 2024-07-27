@@ -10,7 +10,7 @@ public class Brick : MonoBehaviour
     public TMP_Text healthText;
     public GameManager gameManager;
 
-    private void Start()
+    private void Awake()
     {
         healthText.text = health.ToString();
         gameManager = FindObjectOfType<GameManager>();
@@ -20,12 +20,12 @@ public class Brick : MonoBehaviour
     {
         if (health <= 0)
         {
+            AudioSource.PlayClipAtPoint(destroySound, transform.position, 1f);
             if (gameManager != null)
             {
                 gameManager.brickCount--;
                 gameManager.InstantiateParticle(transform.position);
-            }
-            AudioSource.PlayClipAtPoint(destroySound, transform.position, 0.1f);
+            } 
             Destroy(gameObject);
         }
         healthText.text = health.ToString();

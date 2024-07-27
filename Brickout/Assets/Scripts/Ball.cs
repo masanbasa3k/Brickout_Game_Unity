@@ -20,7 +20,7 @@ public class Ball : MonoBehaviour
     void Awake()
     {
         layerMask = LayerMask.GetMask("Wall","Brick","EZ");
-        float directionX = Random.value > 0.5f ? 1 : -1;
+        float directionX = Random.Range(-1f, 1f);
         float directionY = -1;
 
         direction = new Vector2(directionX, directionY).normalized;
@@ -46,9 +46,8 @@ public class Ball : MonoBehaviour
                     direction = new Vector2(directionX, directionY).normalized;
                     transform.position = new Vector3(0, 0f, 0);
 
-                    gameManager.lives--;
-                    gameManager.updateLives();
-                    AudioSource.PlayClipAtPoint(gameOverSound, transform.position);
+                    gameManager.updateLives(-1);
+                    AudioSource.PlayClipAtPoint(gameOverSound, transform.position, 1f);
                 }
                 else
                 {
@@ -56,7 +55,7 @@ public class Ball : MonoBehaviour
                     Transform parent = (hit.collider.transform.parent).parent;
                     Brick brick = parent.GetComponent<Brick>();
                     brick.health--;
-                    AudioSource.PlayClipAtPoint(bounceSound, transform.position);
+                    AudioSource.PlayClipAtPoint(bounceSound, transform.position, 1f);
                     transform.position = hit.point - direction * 0.1f;
                     direction = Vector2.Reflect(direction, hit.normal);
                 }      
@@ -64,7 +63,7 @@ public class Ball : MonoBehaviour
             else
             {
                 InstantiateParticle(transform.position);
-                AudioSource.PlayClipAtPoint(bounceSound, transform.position);
+                AudioSource.PlayClipAtPoint(bounceSound, transform.position, 1f);
                 transform.position = hit.point - direction * 0.1f;
                 direction = Vector2.Reflect(direction, hit.normal);
             }

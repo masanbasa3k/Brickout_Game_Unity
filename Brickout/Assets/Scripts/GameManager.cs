@@ -3,15 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine.UI;
 
 
 public class GameManager : MonoBehaviour
 {
     public int level = 1;
+    public int lives = 3;
     public TMP_Text levelText;
     public TMP_Text livesText;
-    public int lives;
-    [SerializeField]
+    [Tooltip("The music")]
+    [SerializeField] private AudioSource themeSong;
+
+    [Tooltip("The brick")]
     public GameObject brickPrefab;
     public GameObject particlePrefab;
     public List<List<object>> level1 = new List<List<object>>(){
@@ -21,6 +25,7 @@ public class GameManager : MonoBehaviour
     public int brickCount;
     private void Awake()
     {
+        themeSong = GetComponent<AudioSource>();
         DontDestroyOnLoad(this.gameObject);
         LoadNextLevel();
     }
@@ -34,16 +39,19 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void updateLives()
+    public void updateLives(int change)
     {
+        lives += change;
         livesText.text = "Lives: " + lives;
     }
 
     public void LoadNextLevel()
     {
+        themeSong.Play();
         SceneManager.LoadScene("Level" + level + "Scene");
         BrickCreator(level1[level-1]);
         levelText.text = "Level: " + level;
+        livesText.text = "Lives: " + lives;
     }
 
     public void BrickCreator(List<object> level)
@@ -54,7 +62,6 @@ public class GameManager : MonoBehaviour
         float yOffset = (float)level[3];
         Vector2 startPosition = (Vector2)level[4];
         int health = (int)level[5];
-
         brickCount = rows * columns;
         
         for (int row = 0; row < rows; row++)
